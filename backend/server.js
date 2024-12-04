@@ -8,11 +8,28 @@ dotenv.config();
 const app = express();
 
 //routing
-app.get("/", (req,res) => {
-    res.send("Server is ready");
+app.post("/products", (req,res) => {
+   const product = req.body; //user will send this data
+
+   if (!product.name || !p.approduct.price || !product.image){
+    return res.status(400).json({success:false, message: "Please provide all the fields"});
+   }
+   const newProduct = new Product(product)
+
+   try{
+    newProduct.save();
+    res.status(201).json({success:true, data:newProduct});
+   }
+    catch(error){
+    console.error("error in create product:", error.message);
+    res.status(500).json({sucess:false, message:"server error"});
+    }
+   
+
 });
 
 //console.log(process.env.MONGO_URI)
+
 
 app.listen(5000, () => {
     connectDB();
