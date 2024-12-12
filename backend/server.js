@@ -6,15 +6,15 @@ import { connectDB } from './config/db.js';
 dotenv.config();
 
 const app = express();
+app.use(express.json()); // allows to use json in the body
 
-//routing
-app.post("/products", (req,res) => {
+app.post("/api/products", (req,res) => {
    const product = req.body; //user will send this data
 
    if (!product.name || !p.approduct.price || !product.image){
     return res.status(400).json({success:false, message: "Please provide all the fields"});
    }
-   const newProduct = new Product(product)
+   const newProduct = new Product(product);
 
    try{
     newProduct.save();
